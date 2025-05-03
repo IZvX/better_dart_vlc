@@ -530,9 +530,9 @@ Done
 - Changing/retrieving audio track.
 - Media clipping.
 - Support for Windows, Linux or macOS.
+- Subtitle control.
 
 Under progress or planned features (irrespective of order)...
 
 - Bringing project on Android and iOS.
 - Removing [libVLC++](https://github.com/videolan/libvlcpp) dependency.
-- Subtitle control.
