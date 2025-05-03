@@ -376,6 +376,25 @@ final record = Record.create(
 record.start();
 ```
 
+#### Subtitles.
+
+```dart
+player.getSubtitleTrackCount(); // Returns subtitle count
+player.getCurrentSubtitleTrack(); // Returns id of current subtitle
+player.setSubtitleTrack(subtitle_id); // Set Subtitle track to subtitle_id
+player.getSubtitleTrackDescription(index).id // Returns subtitle id from index
+// Example Returns a list of all subtitle descriptions :
+    for (int i = 0; i < player.getSubtitleTrackCount(); i++) {
+      final track = player.getSubtitleTrackDescription(
+        i,
+      ); // now returns object with id & name
+      log('Index : ${i}');
+      log('Name : ${track.name}');
+      log('Id : ${track.id}');
+    }
+
+```
+
 ## Setup
 
 ### Windows
@@ -530,9 +549,10 @@ Done
 - Changing/retrieving audio track.
 - Media clipping.
 - Support for Windows, Linux or macOS.
-- Subtitle control.
+- Subtitle control. ( Incomplete, Read above for list of features )
 
 Under progress or planned features (irrespective of order)...
 
 - Bringing project on Android and iOS.
 - Removing [libVLC++](https://github.com/videolan/libvlcpp) dependency.
+
