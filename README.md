@@ -551,8 +551,7 @@ Done
 - Support for Windows, Linux or macOS.
 - Subtitle control. ( Incomplete, Read above for list of features )
 
-Under progress or planned features (irrespective of order)...
-
-- Bringing project on Android and iOS.
-- Removing [libVLC++](https://github.com/videolan/libvlcpp) dependency.
-
+Under progress (ordered)...
+- Add subtitles from URL or File
+- Subtitles Delay
+- Better Controls
