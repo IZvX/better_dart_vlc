@@ -1,18 +1,22 @@
-<h1 align="center"><a href="https://github.com/alexmercerind/dart_vlc">dart_vlc</a></h1>
+<h1 align="center"><a href="https://github.com/alexmercerind/dart_vlc">dart_vlc + SPU</a></h1>
 <p align="center">Flutter audio / video playback, broadcast & recording library for Windows & Linux.</p>
-
+<p align="center">A Fork of dart_vlc with the requested feature of subtitle controls.</p>
 <br />
 
 <p align="center">
   <strong>Sponsored with 💖 by</strong>
   <br>
   <a href="https://getstream.io/chat/sdk/flutter/?utm_source=alexmercerind_dart&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=alexmercerind_December2022_FlutterSDK_klmh22" target="_blank">
-    <img src="https://user-images.githubusercontent.com/28951144/204833199-41d8e5f5-5e53-4171-8dc0-902be4e1ed61.png" width="350" height="auto" alt="Stream Chat">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/28951144/204903234-4a64b63c-2fc2-4eef-be44-d287d27021e5.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/28951144/204903022-bbaa49ca-74c2-4a8f-a05d-af8314bfd2cc.svg">
+      <img alt="Stream Chat" width="350" height="auto" src="https://user-images.githubusercontent.com/28951144/204903022-bbaa49ca-74c2-4a8f-a05d-af8314bfd2cc.svg">
+    </picture>
   </a>
   <br>
-    <h6 align="center">
+    <h5 align="center">
       Rapidly ship in-app messaging with Stream's highly reliable chat infrastructure and feature-rich SDKs, including Flutter!
-    </h6>
+    </h5>
   <h4 align="center">
     <a href="https://getstream.io/chat/sdk/flutter/?utm_source=alexmercerind_dart&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=alexmercerind_December2022_FlutterSDK_klmh22" target="_blank">
     Try the Flutter Chat tutorial
@@ -27,27 +31,19 @@
 
 ## Installation
 
-_pub.dev_
-
-```yaml
-dependencies:
-  ...
-  dart_vlc: ^0.1.9
-```
-
 _GitHub_
 
 ```yaml
 dependencies:
   dart_vlc:
     git:
-      url: https://github.com/alexmercerind/dart_vlc.git
+      url: https://github.com/IZvX/dart_vlc_spu.git
       ref: master
 
 dependency_overrides:
   dart_vlc_ffi:
     git:
-      url: https://github.com/alexmercerind/dart_vlc.git
+      url: https://github.com/IZvX/dart_vlc_spu.git
       ref: master
       path: ffi
 ```
@@ -372,6 +368,39 @@ final record = Record.create(
 record.start();
 ```
 
+#### Subtitles.
+
+```dart
+player.getSubtitleTrackCount(); // Returns subtitle count
+player.getCurrentSubtitleTrack(); // Returns id of current subtitle
+player.setSubtitleTrack(subtitle_id); // Set Subtitle track to subtitle_id
+player.getSubtitleTrackDescription(index).id // Returns subtitle id from index
+player.addSubtitleTrack(uri); // Adds a new subtitle track to palyer ( URL of SRT, WEBVTT or ASS file )
+// Example Returns a list of all subtitle descriptions :
+    for (int i = 0; i < player.getSubtitleTrackCount(); i++) {
+      final track = player.getSubtitleTrackDescription(
+        i,
+      ); // now returns object with id & name
+      log('Index : ${i}');
+      log('Name : ${track.name}');
+      log('Id : ${track.id}');
+    }
+
+```
+
+## Other Additions
+```dart
+// Example Returns a list of all audio descriptions :
+    for (int i = 0; i < player.audioTrackCount; i++) {
+      final track = player.getAudioTrackDescription(
+        i,
+      ); // now returns object with id & name
+      log('Index : ${i}');
+      log('Name : ${track.name}');
+      log('Id : ${track.id}');
+    }
+```
+
 ## Setup
 
 ### Windows
@@ -526,9 +555,9 @@ Done
 - Changing/retrieving audio track.
 - Media clipping.
 - Support for Windows, Linux or macOS.
-
-Under progress or planned features (irrespective of order)...
-
-- Bringing project on Android and iOS.
-- Removing [libVLC++](https://github.com/videolan/libvlcpp) dependency.
-- Subtitle control.
+- Subtitle control. ( Incomplete, Read above for list of features )
+- Add subtitles from URL or File
+- Audio Track Description ( Name and ID )
+Under progress (ordered)...
+- Subtitles Delay
+- Audio Track Delay
