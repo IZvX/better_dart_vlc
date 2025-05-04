@@ -22,7 +22,8 @@ class SubtitleTrackInfo {
   final String name;
   final int id;
 
-  const SubtitleTrackInfo({required this.name, required this.id}); //make immutable
+  const SubtitleTrackInfo(
+      {required this.name, required this.id}); //make immutable
 }
 
 /// Keeps various [Player] instances to manage event callbacks.
@@ -121,8 +122,7 @@ class Player {
     if (videoDimensions != null) {
       preferredVideoDimensions = videoDimensions;
     }
-    videoDimensionsController =
-        StreamController<VideoDimensions>.broadcast();
+    videoDimensionsController = StreamController<VideoDimensions>.broadcast();
     videoDimensionsStream = videoDimensionsController.stream;
     players[id] = this;
     // Parse [commandlineArguments] & convert to `char*[]`.
@@ -418,37 +418,66 @@ class Player {
     return count > 1 ? count - 1 : count;
   }
 
-    int getSubtitleTrackCount() {
+  int getSubtitleTrackCount() {
     return PlayerFFI.getSubtitleTrackCount(id);
   }
 
+  SubtitleTrackInfo? getSubtitleTrackDescription(int index) {
+    // Return null if track is not available
+    final ptr = PlayerFFI.getSubtitleTrackDescription(id, index);
+    if (ptr == nullptr) {
+      return null; // Or throw an exception, depending on error handling policy
+    }
 
+    final description = ptr.toDartString();
 
-SubtitleTrackInfo? getSubtitleTrackDescription(int index) { // Return null if track is not available
-  final ptr = PlayerFFI.getSubtitleTrackDescription(id, index);
-  if (ptr == nullptr) {
-    return null; // Or throw an exception, depending on error handling policy
-  }
-
-  final description = ptr.toDartString();
-
-  // Parse the description string (e.g., "dsc(Subtitle 1,123)")
-  try {
-      final parts = description.substring(4, description.length - 1).split(','); // Remove "dsc(" and ")"
+    // Parse the description string (e.g., "dsc(Subtitle 1,123)")
+    try {
+      final parts = description
+          .substring(4, description.length - 1)
+          .split(','); // Remove "dsc(" and ")"
       final name = parts[0];
       final id = int.parse(parts[1]); // Convert ID to integer
 
       return SubtitleTrackInfo(name: name, id: id);
-
-  } catch (e) {
+    } catch (e) {
       print("Error parsing subtitle track description: $e");
       return null; // Or throw an exception
-
+    }
   }
-}
+
+    SubtitleTrackInfo? getAudioTrackDescription(int index) {
+    // Return null if track is not available
+    final ptr = PlayerFFI.getAudioTrackDescription(id, index);
+    if (ptr == nullptr) {
+      return null; // Or throw an exception, depending on error handling policy
+    }
+
+    final description = ptr.toDartString();
+
+    // Parse the description string (e.g., "dsc(Subtitle 1,123)")
+    try {
+      final parts = description
+          .substring(4, description.length - 1)
+          .split(','); // Remove "dsc(" and ")"
+      final name = parts[0];
+      final id = int.parse(parts[1]); // Convert ID to integer
+
+      return SubtitleTrackInfo(name: name, id: id);
+    } catch (e) {
+      print("Error parsing subtitle track description: $e");
+      return null; // Or throw an exception
+    }
+  }
 
   void setSubtitleTrack(int index) {
     PlayerFFI.setSubtitleTrack(id, index);
+  }
+
+  void addSubtitleTrack(String uri) {
+    final uriPtr = uri.toNativeUtf8();
+    PlayerFFI.addSubtitleTrack(id, uriPtr);
+    malloc.free(uriPtr);
   }
 
   int getCurrentSubtitleTrack() {
