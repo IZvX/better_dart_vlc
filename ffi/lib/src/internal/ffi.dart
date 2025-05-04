@@ -114,21 +114,38 @@ abstract class PlayerFFI {
 
   // ... (Existing code)
 
-  static final PlayerGetSubtitleTrackCountDart getSubtitleTrackCount = dynamicLibrary
-      .lookup<NativeFunction<PlayerGetSubtitleTrackCountCXX>>('PlayerGetSubtitleTrackCount')
-      .asFunction();
+  static final PlayerGetSubtitleTrackCountDart getSubtitleTrackCount =
+      dynamicLibrary
+          .lookup<NativeFunction<PlayerGetSubtitleTrackCountCXX>>(
+              'PlayerGetSubtitleTrackCount')
+          .asFunction();
 
-  static final PlayerGetSubtitleTrackDescriptionDart getSubtitleTrackDescription = dynamicLibrary
-      .lookup<NativeFunction<PlayerGetSubtitleTrackDescriptionCXX>>('PlayerGetSubtitleTrackDescription')
-      .asFunction();
+  static final PlayerGetSubtitleTrackDescriptionDart
+      getSubtitleTrackDescription = dynamicLibrary
+          .lookup<NativeFunction<PlayerGetSubtitleTrackDescriptionCXX>>(
+              'PlayerGetSubtitleTrackDescription')
+          .asFunction();
+
+    static final PlayerGetAudioTrackDescriptionDart
+      getAudioTrackDescription = dynamicLibrary
+          .lookup<NativeFunction<PlayerGetAudioTrackDescriptionCXX>>(
+              'PlayerGetAudioTrackDescription')
+          .asFunction();
 
   static final PlayerSetSubtitleTrackDart setSubtitleTrack = dynamicLibrary
-      .lookup<NativeFunction<PlayerSetSubtitleTrackCXX>>('PlayerSetSubtitleTrack')
+      .lookup<NativeFunction<PlayerSetSubtitleTrackCXX>>(
+          'PlayerSetSubtitleTrack')
       .asFunction();
 
-  static final PlayerGetCurrentSubtitleTrackDart getCurrentSubtitleTrack = dynamicLibrary
-      .lookup<NativeFunction<PlayerGetCurrentSubtitleTrackCXX>>('PlayerGetCurrentSubtitleTrack')
+  static final PlayerAddSubtitleTrackDart addSubtitleTrack = dynamicLibrary
+      .lookup<NativeFunction<PlayerAddSubtitleTrackC>>('PlayerAddSubtitleTrack')
       .asFunction();
+
+  static final PlayerGetCurrentSubtitleTrackDart getCurrentSubtitleTrack =
+      dynamicLibrary
+          .lookup<NativeFunction<PlayerGetCurrentSubtitleTrackCXX>>(
+              'PlayerGetCurrentSubtitleTrack')
+          .asFunction();
 
   static final PlayerSetHWNDDart setHWND = dynamicLibrary
       .lookup<NativeFunction<PlayerSetHWNDCXX>>('PlayerSetHWND')

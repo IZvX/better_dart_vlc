@@ -104,7 +104,9 @@ DLLEXPORT int32_t PlayerGetAudioTrackCount(int32_t id);
 
 DLLEXPORT int32_t PlayerGetSubtitleTrackCount(int32_t id);
 DLLEXPORT const char* PlayerGetSubtitleTrackDescription(int32_t id, int32_t index);
+DLLEXPORT const char* PlayerGetAudioTrackDescription(int32_t id, int32_t index);
 DLLEXPORT void PlayerSetSubtitleTrack(int32_t id, int32_t index);
+DLLEXPORT void PlayerAddSubtitleTrack(int32_t id, const char* uri);
 DLLEXPORT int32_t PlayerGetCurrentSubtitleTrack(int32_t id);
 
 

@@ -70,8 +70,14 @@ typedef PlayerGetSubtitleTrackCountDart = int Function(int id);
 typedef PlayerGetSubtitleTrackDescriptionCXX = Pointer<Utf8> Function(Int32 id, Int32 index);
 typedef PlayerGetSubtitleTrackDescriptionDart = Pointer<Utf8> Function(int id, int index);
 
+typedef PlayerGetAudioTrackDescriptionCXX = Pointer<Utf8> Function(Int32 id, Int32 index);
+typedef PlayerGetAudioTrackDescriptionDart = Pointer<Utf8> Function(int id, int index);
+
 typedef PlayerSetSubtitleTrackCXX = Void Function(Int32 id, Int32 index);
 typedef PlayerSetSubtitleTrackDart = void Function(int id, int index);
+
+typedef PlayerAddSubtitleTrackC = Void Function(Int32, Pointer<Utf8>);
+typedef PlayerAddSubtitleTrackDart = void Function(int, Pointer<Utf8>);
 
 typedef PlayerGetCurrentSubtitleTrackCXX = Int32 Function(Int32 id);
 typedef PlayerGetCurrentSubtitleTrackDart = int Function(int id);

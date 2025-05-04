@@ -372,10 +372,26 @@ const char* PlayerGetSubtitleTrackDescription(int32_t id, int32_t index) {
     return writable;
 }
 
+const char* PlayerGetAudioTrackDescription(int32_t id, int32_t index) {
+  auto player = g_players->Get(id);
+    if (!player) return "";
+    std::string description = player->GetAudioTrackDescription(index);
+    char* writable = new char[description.size() + 1];
+    std::copy(description.begin(), description.end(), writable);
+    writable[description.size()] = '\0';
+    return writable;
+}
+
 void PlayerSetSubtitleTrack(int32_t id, int32_t index) {
   auto player = g_players->Get(id);
   if (!player) return;
   player->SetSubtitleTrack(index);
+}
+
+void PlayerAddSubtitleTrack(int32_t id, const char* uri) {
+  auto player = g_players->Get(id);
+  if (!player) return;
+  player->AddSubtitleTrack(std::string(uri));
 }
 
 int32_t PlayerGetCurrentSubtitleTrack(int32_t id) {
