@@ -31,14 +31,6 @@
 
 ## Installation
 
-_pub.dev_
-
-```yaml
-dependencies:
-  ...
-  dart_vlc: ^0.1.9
-```
-
 _GitHub_
 
 ```yaml
