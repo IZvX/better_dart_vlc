@@ -45,13 +45,13 @@ _GitHub_
 dependencies:
   dart_vlc:
     git:
-      url: https://github.com/alexmercerind/dart_vlc.git
+      url: https://github.com/IZvX/dart_vlc_spu.git
       ref: master
 
 dependency_overrides:
   dart_vlc_ffi:
     git:
-      url: https://github.com/alexmercerind/dart_vlc.git
+      url: https://github.com/IZvX/dart_vlc_spu.git
       ref: master
       path: ffi
 ```
