@@ -1,3 +1,7 @@
+## 0.2.0+1
+
+- Minor README changes.
+
 ## 0.2.0
 
 - Updated FFI bindings.

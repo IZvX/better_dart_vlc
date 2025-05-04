@@ -18,6 +18,13 @@ class VideoDimensions {
   String toString() => 'VideoDimensions($width, $height)';
 }
 
+class SubtitleTrackInfo {
+  final String name;
+  final int id;
+
+  const SubtitleTrackInfo({required this.name, required this.id}); //make immutable
+}
+
 /// Keeps various [Player] instances to manage event callbacks.
 Map<int, Player> players = {};
 
@@ -409,6 +416,43 @@ class Player {
     // for some reason this value returns 0 when no tracks exists
     // and 2 or more if there's 1 or more audio tracks for this [MediaSource].
     return count > 1 ? count - 1 : count;
+  }
+
+    int getSubtitleTrackCount() {
+    return PlayerFFI.getSubtitleTrackCount(id);
+  }
+
+
+
+SubtitleTrackInfo? getSubtitleTrackDescription(int index) { // Return null if track is not available
+  final ptr = PlayerFFI.getSubtitleTrackDescription(id, index);
+  if (ptr == nullptr) {
+    return null; // Or throw an exception, depending on error handling policy
+  }
+
+  final description = ptr.toDartString();
+
+  // Parse the description string (e.g., "dsc(Subtitle 1,123)")
+  try {
+      final parts = description.substring(4, description.length - 1).split(','); // Remove "dsc(" and ")"
+      final name = parts[0];
+      final id = int.parse(parts[1]); // Convert ID to integer
+
+      return SubtitleTrackInfo(name: name, id: id);
+
+  } catch (e) {
+      print("Error parsing subtitle track description: $e");
+      return null; // Or throw an exception
+
+  }
+}
+
+  void setSubtitleTrack(int index) {
+    PlayerFFI.setSubtitleTrack(id, index);
+  }
+
+  int getCurrentSubtitleTrack() {
+    return PlayerFFI.getCurrentSubtitleTrack(id);
   }
 
   void setHWND(int hwnd) {
