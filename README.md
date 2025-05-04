@@ -1,6 +1,6 @@
-<h1 align="center"><a href="https://github.com/alexmercerind/dart_vlc">dart_vlc</a></h1>
+<h1 align="center"><a href="https://github.com/alexmercerind/dart_vlc">dart_vlc + SPU</a></h1>
 <p align="center">Flutter audio / video playback, broadcast & recording library for Windows & Linux.</p>
-
+<p align="center">A Fork of dart_vlc with the requested feature of subtitle controls.</p>
 <br />
 
 <p align="center">
