@@ -95,6 +95,12 @@ class Player {
 
   int32_t GetAudioTrackCount();
 
+  int32_t GetSubtitleTrackCount();
+  std::string GetSubtitleTrackDescription(int32_t index);
+  void SetSubtitleTrack(int32_t index);
+  int32_t GetCurrentSubtitleTrack();
+
+
   void SetHWND(int64_t hwnd);
 
   // These methods register callbacks from the client code which get invoked

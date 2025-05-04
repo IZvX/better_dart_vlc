@@ -56,7 +56,8 @@ void PlayerCreate(int32_t id, int32_t video_width, int32_t video_height,
   }
   auto player = g_players->Get(id);
   if (!player) {
-    g_players->Create(id, std::move(std::make_unique<Player>(args)));
+    g_players->Create(
+        id, std::move(std::make_unique<Player>(std::vector<std::string>{})));
     player = g_players->Get(id);
   }
   if (video_width > 0 && video_height > 0) {
@@ -74,11 +75,12 @@ void PlayerCreate(int32_t id, int32_t video_width, int32_t video_height,
   player->SetCompleteCallback(
       [=]() -> void { OnComplete(id, player->state()); });
   player->SetVolumeCallback(
-      [=](auto) -> void { OnVolume(id, player->state()); });
+      [=](float) -> void { OnVolume(id, player->state()); });
   player->SetRateCallback([=](float) -> void { OnRate(id, player->state()); });
   player->SetPositionCallback(
-      [=](auto) -> void { OnPosition(id, player->state()); });
-  player->SetOpenCallback([=](auto) -> void { OnOpen(id, player->state()); });
+      [=](int32_t) -> void { OnPosition(id, player->state()); });
+  player->SetOpenCallback(
+      [=](VLC::Media) -> void { OnOpen(id, player->state()); });
   player->SetPlaylistCallback([=]() -> void { OnOpen(id, player->state()); });
   player->SetBufferingCallback(
       [=](float buffering) -> void { OnBuffering(id, buffering); });
@@ -352,6 +354,34 @@ int32_t PlayerGetAudioTrackCount(int32_t id) {
     player = g_players->Get(id);
   }
   return player->GetAudioTrackCount();
+}
+
+int32_t PlayerGetSubtitleTrackCount(int32_t id) {
+  auto player = g_players->Get(id);
+  if (!player) return 0;
+  return player->GetSubtitleTrackCount();
+}
+
+const char* PlayerGetSubtitleTrackDescription(int32_t id, int32_t index) {
+  auto player = g_players->Get(id);
+    if (!player) return "";
+    std::string description = player->GetSubtitleTrackDescription(index);
+    char* writable = new char[description.size() + 1];
+    std::copy(description.begin(), description.end(), writable);
+    writable[description.size()] = '\0';
+    return writable;
+}
+
+void PlayerSetSubtitleTrack(int32_t id, int32_t index) {
+  auto player = g_players->Get(id);
+  if (!player) return;
+  player->SetSubtitleTrack(index);
+}
+
+int32_t PlayerGetCurrentSubtitleTrack(int32_t id) {
+  auto player = g_players->Get(id);
+    if (!player) return 0;
+    return player->GetCurrentSubtitleTrack();
 }
 
 void PlayerSetHWND(int32_t id, int64_t hwnd) {

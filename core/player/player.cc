@@ -264,7 +264,36 @@ void Player::SetAudioTrack(int32_t track) {
 int32_t Player::GetAudioTrackCount() {
   return vlc_media_player_.audioTrackCount();
 }
+#include "player/player.h"
 
+#include <functional>
+
+// ... (Existing code)
+
+int32_t Player::GetSubtitleTrackCount() {
+  return vlc_media_player_.spuCount();
+}
+
+std::string Player::GetSubtitleTrackDescription(int32_t index) {
+  std::vector<VLC::TrackDescription> descriptions = vlc_media_player_.spuDescription();
+
+    if (index < 0 || index >= descriptions.size()) {
+        return "";
+    }
+
+    return "dsc(" + descriptions[index].name() + "," + std::to_string(descriptions[index].id()) + ")";
+  }
+
+
+void Player::SetSubtitleTrack(int32_t index) {
+  vlc_media_player_.setSpu(index);
+}
+
+int32_t Player::GetCurrentSubtitleTrack() {
+  return vlc_media_player_.spu();
+}
+
+// ... (Existing code)
 void Player::SetHWND(int64_t hwnd) {
   vlc_media_player_.setHwnd(reinterpret_cast<void*>(hwnd));
 }
